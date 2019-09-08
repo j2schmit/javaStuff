@@ -1,145 +1,138 @@
 /*
  * Driver.java
  */
-
+import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.*;
+import java.lang.ClassCastException;
 
 /*
- * This is the Driver class used to test the Employee class.
+ *
+ * I have utilized logging and generics in this class.
+ *
+ * LOGGING --
+ * For logging see the file 'output.log'.
+ * NOTE: I suppressed logging to stdout, as it clutters up output.
+ *
+ * GENERICS --
+ * A generic method has been constructed that when given a collection of
+ * Employee instances and the name of an attribute, it will return an
+ * ArrayList of the attribute values for all instances in the collection.
+ * To demonstrate this the Name and HourlySalary attributes have been used to
+ * return the first Name (via alphabetical ordering) and the largest
+ * HourlySalary.
+ *
+ * Exception handling is only used via throws.
+ * I did not create a custom exception.
+ * For storing the employee objects I have used a LinkedList as the collection.
+ *
  * @author Jeremy Schmitt
  */
 public class Driver {
 
-	/**
+	private static final Logger LOGGER = Logger.getLogger(Driver.class.getName());
+
+    /**
      * Main method to execute the tasks of assignment 3
      */
-	public static void main(String[] args) {
-		// Course name is Java I
-		String courseName = "Java I";
-		// The instructor's name is Godfrey Duke
-		String instructor = "Godfrey Duke";
-		// The number of students enrolled is 30
-		int numberOfStudents = 30;
-		// The course fee is $800
-		double courseFee = 800.0;
+	public static void main(String[] args) throws FileNotFoundException, IOException{
+		// Setting output file for logging
+		FileHandler fh = new FileHandler("output.log");
+		SimpleFormatter formatter = new SimpleFormatter();
+		fh.setFormatter(formatter);
+		LOGGER.addHandler(fh);
+		LOGGER.setUseParentHandlers(false);
 
-		// Constructing ExtensionCourse java1 using no arg constructor and setting instance variable values
-		ExtensionCourse java1 = new ExtensionCourse();
-		java1.setCourseName(courseName);
-		java1.setNumberOfStudents(numberOfStudents);
-		java1.setInstructor(instructor);
-		java1.setCourseFee(courseFee);
+		LOGGER.info("Prompting user for info.");
+		System.out.println("How many employees do you have?");
 
-		// Course name is Java II
-		courseName = "Java II";
-		// The instructor's name is James Gappy
-		instructor = "James Gappy";
-		// The number of students enrolled is 12
-		numberOfStudents = 12;
-		// The course fee is $800
-		courseFee = 800.0;
+		Scanner input = new Scanner(System.in);
 
-		// Constructing ExtensionCourse java2 using no arg constructor and setting instance variable values
-		ExtensionCourse java2 = new ExtensionCourse();
-		java2.setCourseName(courseName);
-		java2.setNumberOfStudents(numberOfStudents);
-		java2.setInstructor(instructor);
-		java2.setCourseFee(courseFee);
+		int numberOfEmployees = Integer.parseInt(input.nextLine().trim());
+		LOGGER.info("Number of employees: " + numberOfEmployees);
 
-		// Course name is Underwater Basket Weaving, one of the more popular extension courses
-		courseName = "Underwater Basket Weaving";
-		// The instructor's name is Aqua Man
-		instructor = "Aqua Man";
-		// The number of students enrolled is 100,000
-		numberOfStudents = 100000;
-		// The course fee is $1024
-		courseFee = 1024.0;
+		String employeeName;
+		double hourlySalary;
+		double hoursWorked;
+		LinkedList<Employee> employees = new LinkedList<Employee>();
 
-		// Constructing ExtensionCourse underWaterBasketWeaving using the arg constructor
-		ExtensionCourse underWaterBasketWeaving = new ExtensionCourse(courseName, numberOfStudents, instructor, courseFee);
+		for (int i = 1; i<=numberOfEmployees; i++) {
+			System.out.println("Please provide the name of this employee: ");
+			employeeName = input.nextLine();
+			LOGGER.info("Employee Name: " + employeeName);
 
-		// Course name is Intro to Fortran, which has been havng enrollment problems lately
-		courseName = "Intro to Fortran";
-		// The instructor is the legendary Donald Kneuth
-		instructor = "Donald Kneuth";
-		// Sadly, no students have enrolled so far
-		numberOfStudents = 0;
-		// The course fee has been lowered to attract students
-		courseFee = 20.0;
+			System.out.println("Please provide the hourly salary for " + employeeName + ": ");
+			hourlySalary = Double.parseDouble(input.nextLine().trim());
+			LOGGER.info("Hourly Salary: " + hourlySalary);
 
-		// Constructing ExtensionCourse introToFortran using the arg constructor
-		ExtensionCourse introToFortran = new ExtensionCourse(courseName, numberOfStudents, instructor, courseFee);
+			System.out.println("Please provide the hours worked by " + employeeName + ": ");
+			hoursWorked = Double.parseDouble(input.nextLine().trim());
+			LOGGER.info("Hours Worked: " + hoursWorked);
 
-		// One student has enrolled!
-		introToFortran.addStudent();
-
-		// Preparing to check if the toString Method and Copy Constructor are working
-		System.out.println("\nLet's see if the copy constructor and toString method are working.\n");
- 
-		// Using toString to display info for introToFortran
-		System.out.println(introToFortran);
-
-		System.out.println("\nThe toString method seems to work.\n");
-
-		ExtensionCourse copyIntroToFortran = new ExtensionCourse(introToFortran);
-
-		System.out.println(copyIntroToFortran);
-
-		System.out.println( copyIntroToFortran == introToFortran );
-
-		System.out.println("\nIt looks like the copy constructor is working, since the objects contain the same info, but have different reference variables.");
-
-		System.out.println("\nLet's see if the equals method is working.\n");
-
-		System.out.println(introToFortran.equals(copyIntroToFortran));
-
-		System.out.println("\nNailed it! Watch out Jeff Dean, I'm coming for your job!\n");
-
-		// Course name is Java III
-		courseName = "Java III";
-		// The instructor is Joshua Bloch
-		instructor = "Joshua Bloch";
-		// 5 students have enrolled
-		numberOfStudents = 5;
-		// The course fee is $800
-		courseFee = 800.0;
-		// The IDE is IntelliJ
-		String ide = "IntelliJ";
-
-		//Creaing  subclasses
-		JavaCourse java3 = new JavaCourse();
-		java3.setCourseName(courseName);
-		java3.setNumberOfStudents(numberOfStudents);
-		java3.setInstructor(instructor);
-		java3.setCourseFee(courseFee);
-		java3.setIde(ide);
-
-		// Displaying java3 info
-		java3.display();
-
-		// Course name is Java IV
-		courseName = "Java IV";
-		// The instructor is Satoshi Nakamoto
-		instructor = "Satoshi Nakamoto";
-		// 5,000,000 students have enrolled. A lot of people are excited to meet the instructor!
-		numberOfStudents = 5000000;
-		// The course fee is $80,000, and people are willing to pay!
-		courseFee = 80000.0;
-		// The IDE is NetBeans
-		ide = "NetBeans";
-
-		JavaCourse java4 = new JavaCourse(courseName, numberOfStudents, instructor, courseFee, ide);
-
-		java4.display();
-
-		// Creating array to hold all ExtensionCourse objects
-		ExtensionCourse[] courses = {java1, java2, underWaterBasketWeaving, introToFortran, copyIntroToFortran, java3, java4};
-
-		// Displaying all instance variable values for each ExtensionCourse object
-		for (ExtensionCourse course: courses) {
-			course.display();
+			employees.add(new Employee(employeeName, hourlySalary, hoursWorked));
+			LOGGER.info("Employee added to LinkedList.");
 		}
 
-		ExtensionCourse.displayCounter();
+		printSalaryReport(employees);
+		LOGGER.info("Employees info exported to csv.");
+
+		ArrayList<String> names = new ArrayList<String>();
+		names = getListOfValues(employees, "name");
+		Collections.sort(names);
+		System.out.println("The first name (alphabetically) is: " + names.get(0));
+
+		ArrayList<Double> hourlySalaries = new ArrayList<Double>();
+		hourlySalaries = getListOfValues(employees, "hourlySalary");
+		Collections.sort(hourlySalaries);
+		Collections.reverse(hourlySalaries);
+		System.out.println("The largest hourly salary is: $" + hourlySalaries.get(0));
+	}
+
+	/**
+	 * This method creates a CSV file of the employee info
+	 * @param employees a LinkedList of employee instances
+	 * @return void
+	 */
+	public static void printSalaryReport(LinkedList<Employee> employees) throws FileNotFoundException{
+		double hourlySalary;
+		double hoursWorked;
+		File file = new File("employee.csv");
+		PrintWriter printWriter = new PrintWriter(file);
+		for (Employee employee : employees) {
+			hourlySalary = employee.getHourlySalary();
+			hoursWorked = employee.getHoursWorked();
+			printWriter.println(employee.getName()+", "+hourlySalary+", "+hoursWorked+", "+hourlySalary*hoursWorked);
+		}
+		printWriter.close();
+	}
+
+	/* Suppressing unchecked type warning, as I am preventing null values.
+	   Might be a little sketchy :).
+	   This is a clear example of the difference in type handling between python & java.
+	   What would be natural for a python dictionary is problematic for java.
+	*/
+	/**
+	 * This generic method returns an ArrayList of the specificied attribute for
+	 * all employee instances in the LinkedList.
+	 * @param employees a LinkedList of employee instances
+	 * @param valueType a String specifying the attributes
+	 * @return ArrayList
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> ArrayList<T> getListOfValues(LinkedList<Employee> employees, String valueType) {
+		ArrayList<T> values = new ArrayList<T>();
+		for (Employee employee : employees) {
+			if (employee.getMap().get(valueType) != null) {
+				values.add((T) employee.getMap().get(valueType));
+			}
+		}
+		return values;
 	}
 
 }
