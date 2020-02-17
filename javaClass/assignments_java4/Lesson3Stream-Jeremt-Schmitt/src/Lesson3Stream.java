@@ -45,6 +45,9 @@ public class Lesson3Stream {
                 System.out.println("Results: Stream was " + difference + " millisecs faster than parallelStream");
                 System.out.println("Doubling String size and trying again");
                 contents += contents;
+            } else {
+                System.out.println("Results: parallelStream was " + -1.0 * difference + " millisecs faster than stream");
+                System.out.println("All done!");
             }
         }
     }
