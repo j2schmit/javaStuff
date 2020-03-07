@@ -5,11 +5,26 @@ import java.util.Scanner;
 
 public class Lesson6NetworkingServer {
     public static void main(String[] args) throws IOException {
-        // expects args "--port <port #>", i.e. "--port 8189"
-        int port = Integer.parseInt(args[1]);
+        int port = 0;
+
+        if (args.length != 2){
+            displayHelpMessage();
+            System.exit(1);
+        }
+
+        for (int idx = 0; idx < args.length; idx++) {
+            String cmd = args[idx];
+            switch (cmd) {
+                case "--port":
+                    port = Integer.parseInt(args[++idx]);
+                    break;
+                default:
+                    displayHelpMessage();
+                    System.exit(1);
+            }
+        }
 
         try (ServerSocket s = new ServerSocket(port)) {
-            // Wait for client
             try (Socket incoming = s.accept()) {
                 InputStream inStream = incoming.getInputStream();
                 OutputStream outStream = incoming.getOutputStream();
@@ -29,5 +44,11 @@ public class Lesson6NetworkingServer {
                 }
             }
         }
+    }
+
+    private static void displayHelpMessage() {
+        String helpMsg = "";
+        helpMsg += "--port <port #>  (REQUIRED)\n";
+        System.out.println(helpMsg);
     }
 }
