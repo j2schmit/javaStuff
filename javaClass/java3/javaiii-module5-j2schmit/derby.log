@@ -1,0 +1,10 @@
+----------------------------------------------------------------
+Sun Nov 24 16:12:53 PST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance a816c00e-016e-9fe7-6a0b-0000077cc9e0 
+on database directory /Users/cooler/gitRepos/java3/javaiii-module5-j2schmit/Example  with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
+Loaded from file:/Users/cooler/.m2/repository/org/apache/derby/derby/10.9.1.0/derby-10.9.1.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=12.0.2+10
+user.dir=/Users/cooler/gitRepos/java3/javaiii-module5-j2schmit
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
